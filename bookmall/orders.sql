@@ -27,3 +27,66 @@ INSERT INTO orders VALUES (10, 3, 8, 130000, TO_DATE('2018-07-10', 'YYYY-MM-DD')
 
 SELECT * FROM orders;
 
+-- 총판매금액, 평균금액을 구하시오
+SELECT SUM(saleprice) 총판매액, AVG(saleprice) 평균금액
+FROM orders;
+
+-- 총판매건수 검색하기
+SELECT COUNT(*) 총판매건수
+FROM orders;
+
+-- 2번 고객의 주문 내역 검색하기
+SELECT *
+FROM orders
+WHERE custid = 2;
+
+-- 2번 고객(김연아)이 주문한 도서의 총 판매액을 구하시오
+SELECT SUM(saleprice) 총매출
+FROM orders
+WHERE custid = 2;
+
+-- 가격이 8000원 이상인 도서를 구매한 고객별 주문도서의 총 수량을 구하시오
+-- 단, 2권 이상 구매한 고객만 찾으시오.
+SELECT custid, COUNT(*) 총수량
+FROM orders
+WHERE saleprice >= 8000
+GROUP BY custid
+HAVING COUNT(*) >= 2;
+
+-- 조인(1개 테이블 이상 연결하는 기법)
+SELECT cus.name, ord.saleprice, ord.orderdate
+FROM orders ord, customer cus 
+WHERE ord.custid = cus.custid
+AND cus.name = '박지성';
+
+-- 책의 판매액과 실제 판매액과 그 날짜를 구하시오
+select customer.name 고객, book.bookid, book.price 정가, orders.orderdate 판매된날, orders.saleprice 실제판매가격
+from orders, customer, book
+WHERE orders.custid = customer.custid
+AND book.bookid = orders.bookid;
+
+-- 고객 이름별로 주문한 도서의 총 판매액을 구하시오
+-- 집계를 구할때는 GROUP BY절 사용
+-- HAVING 절은 - GROUP BY 질의 결과 나타내는 그룹을 제한하는 역할
+SELECT cus.name, SUM(ord.saleprice)
+FROM orders ord, customer cus
+WHERE ord.custid = cus.custid
+GROUP BY cus.name;
+
+-- '박지성' 이름을 가진 고객의 총 판매액을 구하시오
+SELECT cus.name, SUM(ord.saleprice)
+FROM orders ord, customer cus
+WHERE ord.custid = cus.custid
+GROUP BY cus.name
+HAVING cus.name = '박지성';
+
+-- 총 판매액의 고객을 오름차순으로 구하시오
+select cus.name, sum(ord.saleprice)
+from orders ord, customer cus
+where ord.custid = cus.custid
+group by cus.name
+order by sum(saleprice) desc;
+
+
+
+
