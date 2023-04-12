@@ -8,7 +8,7 @@ CREATE TABLE employee(
     -- 외래키(FOREIGN KEY) 제약조건
     CONSTRAINT emp_fk1 FOREIGN KEY(deptno)
     REFERENCES dept(deptno)
-    -- ON DELETE CASCADE
+    -- ON DELETE CASCADE(부서를 삭제하면 참조하고 있는 사원도 삭제)
 );
 
 -- 참조 무결성 제약 위배
@@ -19,8 +19,8 @@ INSERT INTO employee VALUES (100, '이강', 2500000, SYSDATE, '남자', '1000');
 INSERT INTO employee VALUES (101, '이산', 2000000, SYSDATE, '여자', '1001');
 INSERT INTO employee VALUES (102, '박달', 1500000, SYSDATE, '남자', '1002');
 INSERT INTO employee VALUES (103, '강하늘', 3500000, SYSDATE, '', '1003');
-INSERT INTO employee VALUES (104, '양우주', 4500000, SYSDATE, '여자', '1004');
-
+INSERT INTO employee VALUES (104, '양우주', 4500000, SYSDATE, '여자', '1000');
+INSERT INTO employee VALUES (105, '강남', 2600000, SYSDATE, '남자', '1000');
 -- 사원 자료 검색
 SELECT * FROM employee;
 
@@ -49,5 +49,17 @@ WHERE ename LIKE '이%';
 SELECT COUNT(*) as 사원수
 FROM employee;
 
-DROP TABLE employee;
+-- 중복없이 부서번호를 검색하시오(DISTINCT 키워드)
+SELECT DISTINCT deptno 부서번호
+FROM employee;
+
+-- GROUP BY 절(소속등 그룹화)
+-- 부서별 급여 총액을 구하시오
+SELECT deptno 부서, SUM(sal) 급여총액, AVG(sal) 급여평균
+FROM employee
+GROUP BY deptno
+HAVING AVG(sal) >= 3000000
+ORDER BY AVG(sal) DESC;
+
+
 commit;

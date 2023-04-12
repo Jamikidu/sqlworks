@@ -7,11 +7,20 @@ CREATE TABLE emp(
     createdate DATE DEFAULT SYSDATE     -- 등록일
 );
 
+-- 사원의 성별 칼럼 추가(ALTER ~ ADD 칼럼이름 자료형)
+ALTER TABLE emp ADD gender VARCHAR2(4);
+
+-- 사원의 성별 자료형을 변경 (MODIFY) VARCHAR2(10)
+ALTER TABLE emp MODIFY gender VARCHAR2(10);
+
+DESC emp;
+
 -- 사원 추가
 INSERT INTO emp VALUES (100, '이강', 2500000, SYSDATE);
 INSERT INTO emp VALUES (101, '김산', 3000000, SYSDATE);
 INSERT INTO emp VALUES (102, '오상식', 5000000, SYSDATE);
 INSERT INTO emp VALUES (103, '박신입', '', SYSDATE);
+INSERT INTO emp VALUES (104, '서울시', 1500000, SYSDATE, '여');
 
 -- 사원 조회
 SELECT * FROM emp;
@@ -35,4 +44,30 @@ SELECT *
 FROM emp
 ORDER BY sal DESC;
 
+-- 사원의 수를 구하시오
+SELECT COUNT(*) as 사원수
+FROM emp;
+
+-- 사원의 급여의 합게와 평균을 구하시오
+SELECT SUM(sal) 급여합계, AVG(sal) 급여평균
+FROM emp;
+
+-- 사원 조회
+SELECT * FROM emp;
+
+-- 성별이 '여'인 사원을 '여자'로 변경하시오
+-- 이름이 서울시인 사원을 검색하시오
+/* SELECT * FROM emp
+WHERE empno = '104'; */
+
+UPDATE emp
+SET gender = '여자'
+WHERE empno = 104;
+
+-- 이름이 서울시인 사원 삭제
+DELETE FROM emp
+WHERE ename = '서울시';
+
 COMMIT;
+-- COMMIT 전이면 취소 가능함
+ROLLBACK;
