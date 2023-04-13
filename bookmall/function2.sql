@@ -1,0 +1,2 @@
+-- function
+-- NULL 값 처리하기
