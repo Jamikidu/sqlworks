@@ -8,9 +8,9 @@ SELECT * FROM orders;
 SELECT cus.custid, cus.name, ord.saleprice, ord.orderdate
 FROM customer cus, orders ord
 WHERE cus.custid = ord.custid
---AND cus.name = '김연아';    -- 김연아 고객의 주문내역
+AND cus.name = '김연아';    -- 김연아 고객의 주문내역
 --AND saleprice >= 20000;    -- 판매가격이 20000원 이상인 주문 내역
-AND orderdate = '2018-7-8';  -- 주문일이 2018-7-8 주문 내역
+--AND orderdate = '2018-7-8';  -- 주문일이 2018-7-8 주문 내역
 
 -- 고객 이름별로 주문한 모든 도서의 총 판매액을 구하시오
 SELECT cus.name, SUM(saleprice) 판매금액,
@@ -50,3 +50,15 @@ WHERE custid IN(SELECT custid FROM orders);
 -- 도서를 구매한 적이 없는 고객의 이름을 검색하시오
 SELECT custid, name FROM customer
 WHERE custid NOT IN(SELECT custid FROM orders);
+
+-- '김연아' 고객의 주문내역을 검색하시오
+-- 1. 김연아 고객의 아이디 검색
+SELECT custid FROM customer
+WHERE name = '김연아';
+
+-- 2. 그 아이디로 주문테이블에서 검색
+SELECT *
+FROM orders
+WHERE custid = (SELECT custid
+                FROM customer
+                WHERE name = '김연아');
