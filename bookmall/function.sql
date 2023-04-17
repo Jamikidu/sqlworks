@@ -62,7 +62,15 @@ WHERE publisher = '굿스포츠';
 
 -- 날짜 함수
 -- 20일전의 날짜 출력
-SELECT SYSDATE -20 FROM DUAL;
+SELECT SYSDATE +20 FROM DUAL;
+
+-- 4월1일에서 20일후(특정한 날: 문자형 -> 날짜형)
+SELECT TO_DATE('2023/04/01') +20 FROM DUAL;
+
+-- 입사일 : 2022-1-1, 퇴사일 : 2023-1-31(월수 계산)
+SELECT
+    ROUND(MONTHS_BETWEEN(TO_DATE('2023-1-31'), TO_DATE('2022-1-1'))) 총개월수
+FROM DUAL;
 
 -- 3개월 후의 날짜 출력
 SELECT ADD_MONTHS(SYSDATE, 3) 결과
