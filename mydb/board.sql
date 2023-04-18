@@ -29,7 +29,8 @@ INSERT INTO board(bno, title, writer, content)
 VALUES(seq.NEXTVAL, '좋은 하루', '긴하루', '좋은 하루 되세요');
 
 -- 게시글 검색
-SELECT * FROM board;
+SELECT * FROM board
+ORDER BY regdate DESC;
 
 -- 작성자가 관리자인 게시글을 검색하시오
 SELECT * FROM board
@@ -45,5 +46,32 @@ WHERE bno = 2;
 DELETE FROM board
 WHERE bno = 3; 
 
+-- 재귀 복사(자료 삽입)
+-- INSERT INTO(칼럼) (SELECT 칼럼 FROM 테이블이름)
+INSERT INTO board(bno, title, writer, content)
+(SELECT seq.nextval, title, writer, content FROM board);
+
+SELECT ROWNUM, bno, title, content
+FROM board
+WHERE ROWNUM > 0 AND ROWNUM <= 10;
+--WHERE ROWNUM > 10 AND ROWNUM <= 20;  -> ROWNUM은 반드시 1을 포함해야함
+
+-- 페이지 처리
+SELECT *
+FROM
+(SELECT ROWNUM rn, bno, title, content
+FROM board)
+WHERE rn >= 11 AND rn <= 20;  -- ROWNUM의 별칭을 사용하면 가능함
+
+-- ROWID
+-- 데이터를 구분하는 유일한 값
+-- ROWID를 통해서 데이터 파일, 어느 블럭에 저장되어 있는 지 알 수 있음
+SELECT ROWID, bno, title, content
+FROM board
+WHERE ROWID = 'AAATFlAAHAAAAGrAAA';
+
+
 -- 시퀀스 삭제
 DROP SEQUENCE seq;
+
+DROP TABLE board;
