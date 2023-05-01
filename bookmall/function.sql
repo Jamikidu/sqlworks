@@ -5,6 +5,11 @@ SELECT ABS(-10), ABS(10) FROM dual;
 -- 반올림 : ROUND(수, 자리수)
 SELECT ROUND(3.875,1) FROM DUAL;
 
+-- 버림 : TRUNC(수, 자리수)
+SELECT TRUNC(3.875, 1) FROM DUAL;
+
+SELECT * FROM employee;
+
 -- sal을 30으로 나눈후 소수 자리수에 따라 반올림한 값 출력
 SELECT sal 급여,
        sal/30 일급,
@@ -21,10 +26,13 @@ SELECT sal 급여,
        TRUNC(sal/30, -1) 결과1
 FROM employee;
 
---고객별 평균 주문 금액을 백원 단위로 반올림한 값을 구하시오
-SELECT custid 고객번호 , ROUND(AVG(saleprice), -2) 평균주문금액
+SELECT SUM(saleprice) 총판매금액, ROUND(AVG(saleprice), -2) 평균주문금액
+FROM orders;
+
+--고객별 평균 주문 금액을 십원 단위로 반올림한 값을 구하시오
+SELECT custid 고객번호, orderdate, ROUND(AVG(saleprice), -2) 평균주문금액
 FROM orders
-GROUP BY custid;
+GROUP BY custid, orderdate;
 
 SELECT custid 고객번호 , ROUND(SUM(saleprice)/COUNT(*)) 평균금액
 FROM orders
@@ -56,20 +64,21 @@ FROM book;
 -- 굿스포츠에서 출판한 도서의 제목과 제목의 문자 수, 바이트 수를 검색
 -- 한글 3Byte, 영어, 특수기호 - 1Byte
 SELECT bookname,
-       LENGTH(bookname) 문자수
+       LENGTH(bookname) 문자수,
+       LENGTHB(bookname) 바이트수
 FROM book
 WHERE publisher = '굿스포츠';
 
 -- 날짜 함수
 -- 20일전의 날짜 출력
-SELECT SYSDATE +20 FROM DUAL;
+SELECT SYSDATE -20 FROM DUAL;
 
 -- 4월1일에서 20일후(특정한 날: 문자형 -> 날짜형)
 SELECT TO_DATE('2023/04/01') +20 FROM DUAL;
 
 -- 입사일 : 2022-1-1, 퇴사일 : 2023-1-31(월수 계산)
 SELECT
-    ROUND(MONTHS_BETWEEN(TO_DATE('2023-1-31'), TO_DATE('2022-1-1'))) 총개월수
+    ROUND(MONTHS_BETWEEN(TO_DATE('2022-12-31'), TO_DATE('2022-1-1'))) 총개월수
 FROM DUAL;
 
 -- 3개월 후의 날짜 출력

@@ -34,12 +34,13 @@ ORDER BY regdate DESC;
 
 -- 작성자가 관리자인 게시글을 검색하시오
 SELECT * FROM board
-WHERE bno = 2;
+WHERE writer = '관리자';
 
 -- 게시글의 작성자를 '관리자'에서 'admin'으로 변경하세요
 -- UPDATE 테이블이름 SET 칼럼 = 변경값 WHERE 절
 UPDATE board SET writer = 'admin'
-WHERE bno = 2;
+WHERE writer = '관리자';
+
 
 -- 3번 게시글을 삭제하시오
 -- DELETE FROM 테이블이름 WHERE 절
