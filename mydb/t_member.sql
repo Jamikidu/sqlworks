@@ -17,7 +17,7 @@ CREATE TABLE t_board(
     hit         NUMBER DEFAULT 0,
     memberid    VARCHAR2(20) NOT NULL,
     CONSTRAINT FK_MemberBoard FOREIGN KEY(memberid)
-    REFERENCES t_member(memberid)
+    REFERENCES t_member(memberid) ON DELETE CASCADE
 );
 -- 글번호, 글제목, 글내용, 작성일, 수정일, 조회수, 아이디(외래키)
 -- 자동 순번(SEQUENCE)
@@ -31,5 +31,7 @@ VALUES (b_seq.NEXTVAL, '가입인사', '안녕하세요. 반갑습니다.', 'cloud');
 
 SELECT * FROM t_member;
 SELECT * FROM t_board;
+DROP SEQUENCE b_seq;
+DROP TABLE t_board;
 
 COMMIT;
