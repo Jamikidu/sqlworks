@@ -60,6 +60,12 @@ FROM t_board ORDER BY bnum DESC)
 WHERE RN >=11 AND RN <=20;  --별칭(RN)을 사용해야 가능
 --ORDER BY bnum DESC;
 
+-- 페이지 처리2(인라인뷰 -중첩쿼리(서브쿼리))
+SELECT *
+FROM (SELECT ROWNUM rn, board.*
+      FROM(SELECT * FROM t_board ORDER BY bnum DESC) board)
+WHERE rn >=1 and RN <= 10;  -- 별칭(RN)을 사용해야 가능
+
 -- 총 행의 수
 SELECT COUNT(*) FROM t_board;
 
