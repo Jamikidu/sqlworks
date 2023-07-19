@@ -10,6 +10,8 @@ create table t_member(
     primary key(memberid)
 );
 
+select * from t_member;
+
 -- 게시판 테이블
 create table t_board(
 	bnum		int primary key auto_increment,
@@ -43,6 +45,15 @@ values(1, '내용에 대한 댓글입니다.', 'cloud1');
 -- 댓글 검색
 select * from t_reply;
 
+-- 댓글 삭제
+delete from t_reply where rno = 1;
+
+-- 특정 댓글 검색
+select * from t_reply where rno = 2;
+
+-- 댓글 수정
+update t_reply set rcontent="내용수정" where rno = 2;
+
 -- 게시글 쓰기
 insert into t_board(title, content, memberid)
 values('가입인사', '안녕하세요~~', 'poong1');
@@ -56,7 +67,7 @@ insert into t_board(title, content, memberid)
 values('가입인사5', '안녕하세요~~5', 'poong1');
 
 -- 검색
-select * from t_board;
+select * from t_board order by bnum;
 
 -- limit(시작행, 게시글 수) : 시작하는 수에서 1을 더함,
 -- 0~10: 1page, 10-10: 2page
