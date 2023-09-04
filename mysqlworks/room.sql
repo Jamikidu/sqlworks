@@ -1,14 +1,12 @@
 create table reservation(
-	rno				int AUTO_INCREMENT PRIMARY KEY,
-    spot			varchar(50),
-    type			varchar(50),
-    title			varchar(50),
-    users			int,
-    playtime		varchar(30),
-    reservedtime	DATETIME,
-    id				varchar(30),
-    pname			varchar(30),
-    phone			varchar(30)
+	rv_id			varchar(250) primary key,
+    date			date,
+    time			time,
+    rv_people		int,
+    rv_price		int,
+    userName		varchar(250),
+    themeName		varchar(250),
+    rv_date			datetime
 );
 
 drop table reservation;
